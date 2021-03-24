@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2021/03/21 00:18:28.000.208,C:\Users\Administrator\Documents\Embarcadero\Studio\Projects\Unit1.dfm=E:\zInstaller2.0\InstallerFromZDB2\zInstaller2BuildToolFrm.dfm</Transaction>
+    <Transaction>2021/03/21 00:18:28.000.208,C:\Users\Administrator\Documents\Embarcadero\Studio\Projects\Unit1.pas=E:\zInstaller2.0\InstallerFromZDB2\zInstaller2BuildToolFrm.pas</Transaction>
+    <Transaction>2021/03/21 00:18:30.000.126,C:\Users\Administrator\Documents\Embarcadero\Studio\Projects\Project1.dproj=E:\zInstaller2.0\InstallerFromZDB2\zInstaller2BuildTool.dproj</Transaction>
+    <Transaction>2021/03/21 00:46:35.000.077,E:\zInstaller2.0\InstallerFromZDB2\zInstaller2BuildToolFrm.dfm=E:\zInstaller2.0\InstallerFromZDB2\Installer2BuildToolFrm.dfm</Transaction>
+  </Transactions>
+	<ActiveMobileDevice>
+		<NoProfile iOSSimulator="iPhone5"/>
+	</ActiveMobileDevice>
+</BorlandProject>

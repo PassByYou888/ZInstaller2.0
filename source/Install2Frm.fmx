@@ -1,0 +1,178 @@
+object Install2Form: TInstall2Form
+  Left = 0
+  Top = 0
+  Caption = 'Z-Installer2.0'
+  ClientHeight = 230
+  ClientWidth = 513
+  Position = DesktopCenter
+  StyleBook = StyleDataModule.GlobalStyleBook
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  DesignerMasterStyle = 0
+  object confLayout: TLayout
+    Align = Top
+    Padding.Right = 10.000000000000000000
+    Margins.Top = 5.000000000000000000
+    Margins.Bottom = 5.000000000000000000
+    Position.Y = 42.000000000000000000
+    Size.Width = 513.000000000000000000
+    Size.Height = 25.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 1
+    object Label1: TLabel
+      Align = Left
+      Size.Width = 120.000000000000000000
+      Size.Height = 25.000000000000000000
+      Size.PlatformDefault = False
+      Text = 'configure'
+      TabOrder = 0
+    end
+    object confEdit: TEdit
+      Touch.InteractiveGestures = [LongTap, DoubleTap]
+      Align = Client
+      TabOrder = 1
+      TextSettings.FontColor = claRed
+      Size.Width = 383.000000000000000000
+      Size.Height = 25.000000000000000000
+      Size.PlatformDefault = False
+      object browseConfEditButton: TEditButton
+        CanFocus = False
+        Cursor = crArrow
+        Size.Width = 28.000000000000000000
+        Size.Height = 21.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 0
+        Text = '..'
+        OnClick = browseConfEditButtonClick
+      end
+    end
+  end
+  object cliLayout: TLayout
+    Align = Client
+    Size.Width = 513.000000000000000000
+    Size.Height = 158.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 2
+    object btnLayout: TLayout
+      Align = Top
+      Padding.Right = 10.000000000000000000
+      Margins.Bottom = 5.000000000000000000
+      Position.Y = 35.000000000000000000
+      Size.Width = 513.000000000000000000
+      Size.Height = 25.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 2
+      object InstallButton: TButton
+        Align = MostLeft
+        Size.Width = 80.000000000000000000
+        Size.Height = 25.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 0
+        Text = 'Install'
+        OnClick = InstallButtonClick
+      end
+      object ProgressBar: TProgressBar
+        Align = Left
+        Orientation = Horizontal
+        Margins.Left = 10.000000000000000000
+        Margins.Right = 10.000000000000000000
+        Position.X = 90.000000000000000000
+        Position.Y = 1.000000000000000000
+        Size.Width = 95.000000000000000000
+        Size.Height = 23.000000000000000000
+        Size.PlatformDefault = False
+      end
+      object StatusLabel: TLabel
+        Align = Client
+        Size.Width = 308.000000000000000000
+        Size.Height = 25.000000000000000000
+        Size.PlatformDefault = False
+        TextSettings.WordWrap = False
+        Text = '....'
+        TabOrder = 2
+      end
+    end
+    object Memo: TMemo
+      Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
+      DataDetectorTypes = []
+      ReadOnly = True
+      ShowScrollBars = False
+      Align = Client
+      Size.Width = 513.000000000000000000
+      Size.Height = 93.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 3
+      Viewport.Width = 509.000000000000000000
+      Viewport.Height = 89.000000000000000000
+    end
+    object destDirLayout: TLayout
+      Align = MostTop
+      Padding.Right = 10.000000000000000000
+      Margins.Top = 5.000000000000000000
+      Margins.Bottom = 5.000000000000000000
+      Position.Y = 5.000000000000000000
+      Size.Width = 513.000000000000000000
+      Size.Height = 25.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 1
+      object Label2: TLabel
+        Align = Left
+        Size.Width = 120.000000000000000000
+        Size.Height = 25.000000000000000000
+        Size.PlatformDefault = False
+        Text = 'Install to directory'
+        TabOrder = 0
+      end
+      object DirectoryEdit: TEdit
+        Touch.InteractiveGestures = [LongTap, DoubleTap]
+        Align = Client
+        TabOrder = 1
+        Size.Width = 383.000000000000000000
+        Size.Height = 25.000000000000000000
+        Size.PlatformDefault = False
+        object BrowseDirEditButton: TEditButton
+          CanFocus = False
+          Cursor = crArrow
+          Size.Width = 28.000000000000000000
+          Size.Height = 21.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 0
+          Text = '..'
+          OnClick = BrowseDirEditButtonClick
+        end
+      end
+    end
+  end
+  object titleLabel: TLabel
+    Align = MostTop
+    AutoSize = True
+    StyledSettings = [Family, Style, FontColor]
+    Margins.Left = 5.000000000000000000
+    Margins.Top = 5.000000000000000000
+    Margins.Right = 5.000000000000000000
+    Margins.Bottom = 5.000000000000000000
+    Position.X = 5.000000000000000000
+    Position.Y = 5.000000000000000000
+    Size.Width = 503.000000000000000000
+    Size.Height = 27.000000000000000000
+    Size.PlatformDefault = False
+    TextSettings.Font.Size = 20.000000000000000000
+    Text = '...'
+    TabOrder = 0
+  end
+  object OpenDialog: TOpenDialog
+    DefaultExt = 'zInstall2.conf'
+    FileName = 'zInstall2.conf'
+    Filter = 'zInstall2.conf|zInstall2.conf'
+    Options = [ofHideReadOnly, ofPathMustExist, ofFileMustExist, ofEnableSizing]
+    Left = 136
+    Top = 120
+  end
+  object Timer: TTimer
+    Interval = 500
+    OnTimer = TimerTimer
+    Left = 136
+    Top = 176
+  end
+end
