@@ -58,7 +58,7 @@ object Installer2BuildToolForm: TInstaller2BuildToolForm
     OnClick = buildButtonClick
   end
   object ThNumEdit: TLabeledEdit
-    Left = 125
+    Left = 293
     Top = 47
     Width = 33
     Height = 21
@@ -66,10 +66,10 @@ object Installer2BuildToolForm: TInstaller2BuildToolForm
     EditLabel.Height = 13
     EditLabel.Caption = 'Thread:'
     LabelPosition = lpLeft
-    TabOrder = 3
+    TabOrder = 4
   end
   object ChunkEdit: TLabeledEdit
-    Left = 204
+    Left = 372
     Top = 47
     Width = 98
     Height = 21
@@ -77,10 +77,10 @@ object Installer2BuildToolForm: TInstaller2BuildToolForm
     EditLabel.Height = 13
     EditLabel.Caption = 'Chunk:'
     LabelPosition = lpLeft
-    TabOrder = 4
+    TabOrder = 5
   end
   object BlockEdit: TLabeledEdit
-    Left = 349
+    Left = 517
     Top = 47
     Width = 81
     Height = 21
@@ -88,7 +88,7 @@ object Installer2BuildToolForm: TInstaller2BuildToolForm
     EditLabel.Height = 13
     EditLabel.Caption = 'Block:'
     LabelPosition = lpLeft
-    TabOrder = 5
+    TabOrder = 6
   end
   object Memo: TMemo
     Left = 0
@@ -96,7 +96,7 @@ object Installer2BuildToolForm: TInstaller2BuildToolForm
     Width = 689
     Height = 184
     ScrollBars = ssVertical
-    TabOrder = 7
+    TabOrder = 8
     WordWrap = False
   end
   object ProgressBar: TProgressBar
@@ -104,20 +104,31 @@ object Installer2BuildToolForm: TInstaller2BuildToolForm
     Top = 82
     Width = 150
     Height = 17
-    TabOrder = 6
+    TabOrder = 7
   end
   object CheckBox_Encrypt: TCheckBox
-    Left = 436
+    Left = 604
     Top = 51
     Width = 64
     Height = 17
     Caption = 'Encrypt'
-    TabOrder = 8
+    TabOrder = 9
+  end
+  object SoftEdit: TLabeledEdit
+    Left = 136
+    Top = 47
+    Width = 105
+    Height = 21
+    EditLabel.Width = 48
+    EditLabel.Height = 13
+    EditLabel.Caption = 'Software:'
+    LabelPosition = lpLeft
+    TabOrder = 3
   end
   object Timer: TTimer
     Interval = 500
     OnTimer = TimerTimer
-    Left = 325
+    Left = 493
     Top = 45
   end
 end

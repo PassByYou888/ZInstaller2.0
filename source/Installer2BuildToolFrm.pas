@@ -27,6 +27,7 @@ type
     Timer: TTimer;
     ProgressBar: TProgressBar;
     CheckBox_Encrypt: TCheckBox;
+    SoftEdit: TLabeledEdit;
     procedure TimerTimer(Sender: TObject);
     procedure DirBrowseButtonClick(Sender: TObject);
     procedure buildButtonClick(Sender: TObject);
@@ -61,7 +62,11 @@ var
 begin
   dir_ := DirectoryEdit.Text;
   if SelectDirectory('select source directory.', '/', dir_, [sdNewFolder, sdShowShares, sdNewUI]) then
+    begin
       DirectoryEdit.Text := dir_;
+      if SoftEdit.Text = '' then
+          SoftEdit.Text := umlGetLastStr(DirectoryEdit.Text, '/\');
+    end;
 end;
 
 procedure TInstaller2BuildToolForm.buildButtonClick(Sender: TObject);
@@ -72,6 +77,7 @@ begin
   TCompute.RunP_NP(procedure
     var
       dir_: U_String;
+      software_: U_String;
       nArry: U_StringArray;
       n: U_SystemString;
       dirName: U_String;
@@ -85,14 +91,20 @@ begin
           DirectoryEdit.Enabled := False;
           DirBrowseButton.Enabled := False;
           buildButton.Enabled := False;
+          SoftEdit.Enabled := False;
           ThNumEdit.Enabled := False;
           ChunkEdit.Enabled := False;
           BlockEdit.Enabled := False;
           CheckBox_Encrypt.Enabled := False;
           dir_ := DirectoryEdit.Text;
+          software_ := SoftEdit.Text;
         end);
 
+      if software_.L = 0 then
+          software_ := umlGetLastStr(dir_, '/\');
+
       te := THashTextEngine.Create;
+      te.SetDefaultText('Main___', 'Software', software_);
 
       nArry := umlGetDirListWithFullPath(dir_);
       for n in nArry do
@@ -139,6 +151,7 @@ begin
           DirectoryEdit.Enabled := True;
           DirBrowseButton.Enabled := True;
           buildButton.Enabled := True;
+          SoftEdit.Enabled := True;
           ThNumEdit.Enabled := True;
           ChunkEdit.Enabled := True;
           BlockEdit.Enabled := True;

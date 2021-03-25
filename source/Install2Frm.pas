@@ -25,10 +25,6 @@ uses
   zDrawEngine, zDrawEngineInterface_SlowFMX, MemoryRaster, NotifyObjectBase,
   ZDB2_FileEncoder, ZDB2_Core, zExpression, ListEngine;
 
-const
-  C_Software = 'ZInstallerDemo';
-  C_DestDirectory = 'c:\' + C_Software + '\';
-
 type
   TInstall2Form = class(TForm)
     btnLayout: TLayout;
@@ -164,11 +160,28 @@ begin
 end;
 
 procedure TInstall2Form.browseConfEditButtonClick(Sender: TObject);
+var
+  te: THashTextEngine;
 begin
   OpenDialog.fileName := confEdit.Text;
   if not OpenDialog.Execute then
       exit;
   confEdit.Text := OpenDialog.fileName;
+
+  titleLabel.Text := '';
+  if umlFileExists(confEdit.Text) then
+    begin
+      te := THashTextEngine.Create;
+      te.LoadFromFile(confEdit.Text);
+      titleLabel.Text := te.GetDefaultText('Main___', 'Software', '');
+      disposeObject(te);
+      if DirectoryEdit.Text = '' then
+          DirectoryEdit.Text := umlCombinePath(umlGetFilePath(confEdit.Text), titleLabel.Text);
+    end
+  else
+    begin
+    end;
+  titleLabel.Visible := titleLabel.Text <> '';
 end;
 
 procedure TInstall2Form.BrowseDirEditButtonClick(Sender: TObject);
@@ -216,6 +229,7 @@ begin
 
       sl := TPascalStringList.Create;
       te.GetSectionList(sl);
+      sl.DeletePascalString('Main___');
 
       Successed := True;
       for i := 0 to sl.Count - 1 do
@@ -300,15 +314,32 @@ begin
 end;
 
 constructor TInstall2Form.Create(AOwner: TComponent);
+var
+  te: THashTextEngine;
 begin
   inherited Create(AOwner);
   StatusThreadID := False;
   AddDoStatusHook(self, DoStatus_Backcall);
-  confEdit.Text := umlCombineFileName(TPath.GetLibraryPath, 'zInstall2.conf');
-  confLayout.Visible := not umlFileExists(confEdit.Text);
 
-  titleLabel.Text := C_Software + '...';
-  DirectoryEdit.Text := C_DestDirectory;
+  confEdit.Text := umlCombineFileName(TPath.GetLibraryPath, 'zInstall2.conf');
+
+  titleLabel.Text := '';
+  DirectoryEdit.Text := '';
+  if umlFileExists(confEdit.Text) then
+    begin
+      confLayout.Visible := False;
+      te := THashTextEngine.Create;
+      te.LoadFromFile(confEdit.Text);
+      titleLabel.Text := te.GetDefaultText('Main___', 'Software', '');
+      disposeObject(te);
+      DirectoryEdit.Text := umlCombinePath(umlGetFilePath(confEdit.Text), titleLabel.Text);
+    end
+  else
+    begin
+      confLayout.Visible := True;
+    end;
+  titleLabel.Visible := titleLabel.Text <> '';
+
   InstallLog := TPascalStringList.Create;
 end;
 

@@ -158,7 +158,6 @@ object Install2Form: TInstall2Form
     Size.Height = 27.000000000000000000
     Size.PlatformDefault = False
     TextSettings.Font.Size = 20.000000000000000000
-    Text = '...'
     TabOrder = 0
   end
   object OpenDialog: TOpenDialog
