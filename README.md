@@ -9,11 +9,11 @@
 
 ## 简单使用入门
 
-- 编译**ZInstaller2.0**需要ZDB2.0支持，[https://github.com/PassByYou888/ZDB2.0](https://github.com/PassByYou888/ZDB2.0)
+- 编译**ZInstaller2.0**需要ZDB2.0支持，[https://github.com/PassByYou888/ZDB2.0](https://github.com/PassByYou888/ZDB2.0) **使用前最好先更新一下**
 - 制作安装程序包：使用 **zInstaller2BuildTool.exe** 对目标目录分批打包，生成 **zInstall2.conf**
 - 运行安装程序：自己构建和编译**zInstaller2.exe**，定义好名字，将**zInstall2.conf**和数据包copy到同目录中
 - 运行安装程序完成安装
-- 系统卸载信息自己去编写注册表导入项
+- 系统卸载信息会自动生成一个unstall.bat，自己去编写注册表卸载信息
 
 
 by.qq600585
