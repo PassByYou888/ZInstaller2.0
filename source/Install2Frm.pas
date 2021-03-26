@@ -162,6 +162,7 @@ end;
 procedure TInstall2Form.browseConfEditButtonClick(Sender: TObject);
 var
   te: THashTextEngine;
+  destDir: U_String;
 begin
   OpenDialog.fileName := confEdit.Text;
   if not OpenDialog.Execute then
@@ -174,9 +175,14 @@ begin
       te := THashTextEngine.Create;
       te.LoadFromFile(confEdit.Text);
       titleLabel.Text := te.GetDefaultText('Main___', 'Software', '');
-      disposeObject(te);
       if DirectoryEdit.Text = '' then
-          DirectoryEdit.Text := umlCombinePath(umlGetFilePath(confEdit.Text), titleLabel.Text);
+        begin
+          destDir := te.GetDefaultText('Main___', 'Folder', titleLabel.Text);
+          if not destDir.Exists('\') then
+              destDir := umlCombinePath(umlGetFilePath(confEdit.Text), destDir);
+          DirectoryEdit.Text := destDir;
+        end;
+      disposeObject(te);
     end
   else
     begin
@@ -210,6 +216,7 @@ begin
       packagePassword: U_String;
       cipher: TZDB2_Cipher;
       dec: TZDB2_File_Decoder;
+      uninstBat: TPascalStringList;
     begin
       TCompute.Sync(procedure
         begin
@@ -288,8 +295,20 @@ begin
               destDirLayout.Enabled := True;
               btnLayout.Enabled := True;
             end);
-          InstallLog.Add(umlCombineFileName(destDir, 'uninstall.conf'));
-          InstallLog.SaveToFile(umlCombineFileName(destDir, 'uninstall.conf'));
+
+          InstallLog.Add(umlCombineFileName(destDir, 'install.log'));
+          InstallLog.SaveToFile(umlCombineFileName(destDir, 'install.log'));
+
+          uninstBat := TPascalStringList.Create;
+          uninstBat.Add('@echo off');
+          uninstBat.Add('echo uninstall...');
+          for i := 0 to InstallLog.Count - 1 do
+              uninstBat.Add(PFormat('del /f /q "%s"', [InstallLog[i].Text]));
+          uninstBat.Add(PFormat('del /f /q "%s"', [umlCombineFileName(destDir, 'uninstall.bat').Text]));
+          uninstBat.SaveToFile(umlCombineFileName(destDir, 'uninstall.bat'));
+          disposeObject(uninstBat);
+
+          DoStatus('install done.');
         end;
 
       disposeObject(sl);
@@ -316,6 +335,7 @@ end;
 constructor TInstall2Form.Create(AOwner: TComponent);
 var
   te: THashTextEngine;
+  destDir: U_String;
 begin
   inherited Create(AOwner);
   StatusThreadID := False;
@@ -331,8 +351,12 @@ begin
       te := THashTextEngine.Create;
       te.LoadFromFile(confEdit.Text);
       titleLabel.Text := te.GetDefaultText('Main___', 'Software', '');
+      destDir := te.GetDefaultText('Main___', 'Folder', titleLabel.Text);
+      if not destDir.Exists('\') then
+          destDir := umlCombinePath(umlGetFilePath(confEdit.Text), destDir);
+      DirectoryEdit.Text := destDir;
       disposeObject(te);
-      DirectoryEdit.Text := umlCombinePath(umlGetFilePath(confEdit.Text), titleLabel.Text);
+      Caption := titleLabel.Text;
     end
   else
     begin

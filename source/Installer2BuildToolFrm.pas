@@ -105,6 +105,7 @@ begin
 
       te := THashTextEngine.Create;
       te.SetDefaultText('Main___', 'Software', software_);
+      te.SetDefaultText('Main___', 'Folder', software_);
 
       nArry := umlGetDirListWithFullPath(dir_);
       for n in nArry do
