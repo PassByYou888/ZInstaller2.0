@@ -35,6 +35,7 @@ type
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
   private
     Busy: Boolean;
+    LastState_: SystemString;
     procedure DoStatus_Backcall(Text_: SystemString; const ID: Integer);
     procedure ZDB2_File_OnProgress(State_: SystemString; Total, Current1, Current2: Int64);
     function EncodeDirectory(Directory_, ZDB2File_, Password_: U_String; ThNum_: Integer; chunkSize_: Int64; CM: TSelectCompressionMethod; BlockSize_: Word): Int64;
@@ -53,6 +54,7 @@ implementation
 
 procedure TInstaller2BuildToolForm.TimerTimer(Sender: TObject);
 begin
+  InfoLabel.Caption := LastState_;
   CheckThreadSynchronize;
 end;
 
@@ -145,6 +147,10 @@ begin
       disposeObject(te);
 
       ZDB2_File_OnProgress('...', 100, 0, 0);
+
+      if umlFileExists(umlCombineFileName(TPath.GetLibraryPath, 'zInstaller2.exe')) then
+          umlCopyFile(umlCombineFileName(TPath.GetLibraryPath, 'zInstaller2.exe'), umlCombineFileName(dir_, 'zInstaller2.exe'));
+
       DoStatus('all finish.');
 
       TCompute.Sync(procedure
@@ -201,7 +207,7 @@ begin
     begin
       ProgressBar.Max := 100;
       ProgressBar.Position := umlPercentageToInt64(Total, Current1);
-      InfoLabel.Caption := State_;
+      LastState_ := State_;
     end);
 end;
 
@@ -214,6 +220,7 @@ begin
   ChunkEdit.Text := '1024*1024';
   BlockEdit.Text := '4*1024';
   Busy := False;
+  LastState_ := '';
 end;
 
 destructor TInstaller2BuildToolForm.Destroy;
